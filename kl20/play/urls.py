@@ -1,6 +1,7 @@
-from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('l1/', views.l1),
+    path('', views.main),
+    path('level/<int:id>/', views.Level),
 ]

@@ -1,0 +1,15 @@
+{% extends base.html %}
+{% block head %}
+    <title>{{ level.name }}</title>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ level.level_number }}</h1>
+  <p>{{ level.question }}</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+  <!-- <img src="{{ mymodel.image.url }}" alt="my image"> -->
+{% endblock %}
