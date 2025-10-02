@@ -7,7 +7,8 @@ class Player(models.Model):
     email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=128)
     is_admin = models.BooleanField(default=False)
-
+    last_level = models.ForeignKey('Level', on_delete=models.SET_NULL, null=True, blank=True)
+    
     def __str__(self):
         return self.name
 
@@ -15,7 +16,6 @@ def upload_path(instance, filename):
         return f'{filename}'
 
 class Level(models.Model):
-    
     level_identifier = models.CharField(max_length=7, null=True)
     checkpoint = models.BooleanField(default=False)
     name = models.CharField(max_length=150)
