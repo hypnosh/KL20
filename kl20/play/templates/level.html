@@ -1,15 +1,69 @@
-{% extends base.html %}
+{% extends 'base.html' %}
 {% block head %}
     <title>{{ level.name }}</title>
+    <style>
+      .bg {
+        z-index: -10000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+      }
+      .lvltitle {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 5px 10px;
+        border-radius: 10px;
+      }
+      .lvlform {
+        position: absolute;
+        z-index: 10;
+        padding: 0 10px 10px;
+        border: 1px dashed darkcyan;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        min-width: 45%;
+      } 
+      .hcenter {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .vcenter {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .hcenter.vcenter {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .top {
+        bottom: 49%;
+      }
+      .left {
+        right: 49%;
+      }
+      .right {
+        left: 51%;
+      }
+      .bottom {
+        top: 51%;
+      }
+    </style>
 {% endblock %}
 
 {% block content %}
-  <h1>{{ level.level_number }}</h1>
-  <p>{{ level.question }}</p>
-  <form method="post">
+  <img src="{{ level.image.url }}" alt="{{ level.name }}" class="bg">
+  <h1 class="lvltitle">{{ level.level_identifier }}</h1>
+  <form method="post" class="lvlform {{level.alignV}} {{level.alignH}}">
     {% csrf_token %}
+    <p class="lvlquestion">{{ level.question }}</p>
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-default">Submit</button>
   </form>
-  <!-- <img src="{{ mymodel.image.url }}" alt="my image"> -->
+  
 {% endblock %}

@@ -23,6 +23,25 @@ class Level(models.Model):
     answer = models.CharField(max_length=50)
     slug = models.SlugField(null=True)
     image = models.ImageField(upload_to = upload_path,null=True)
+    class AlignmentH(models.TextChoices):
+        LEFT = 'left', 'Left'
+        CENTER = 'hcenter', 'Center'
+        RIGHT = 'right', 'Right'
+    class AlignmentV(models.TextChoices):
+        TOP = 'top', 'Top'
+        CENTER = 'vcenter', 'Center'
+        BOTTOM = 'bottom', 'Bottom'
+    
+    alignH = models.CharField(
+        max_length=7, 
+        default="hcenter",
+        choices=AlignmentH.choices,
+    )
+    alignV = models.CharField(
+        max_length=7, 
+        default="vcenter",
+        choices=AlignmentV.choices,
+    )
 
     def __str__(self):
         return f"{self.level_identifier} - {self.name}"

@@ -7,7 +7,15 @@ from .forms import AnswerForm, LoginForm
 # Create your views here.
 
 def main(request):
-    return HttpResponse('kl20')
+    if not request.session.get('player_id'):
+        return HttpResponse('/login/')
+
+    player = Player.objects.filter(id=request.session.get('player_id'))
+    if not player:
+        del request.session['player_id']
+        return HttpResponseRedirect('/login/')
+    player = player[0]
+    return HttpResponseRedirect(f'/level/{player.last_level.id if player.last_level else 1}/')
 
 def Login(request):
     if request.session.get('player_id'):
@@ -22,7 +30,7 @@ def Login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            email = form.cleaned_data['username']
             password = form.cleaned_data['password']
             player = Player.objects.filter(email=email, password=password)
             if player:
@@ -39,33 +47,41 @@ def Logout(request):
         del request.session['player_id']
     return HttpResponseRedirect('/login/') 
 
-def Level(request, id):
-    thislevel = Level.objects.filter(id=id)
+def LevelView(request, slug='', id=0):
+
+    if slug:
+        thislevel = Level.objects.filter(slug=slug)
+    elif id:
+        thislevel = Level.objects.filter(id=id)
+    
     if not thislevel:
         return HttpResponse('No such level')
     thislevel = thislevel[0]
 
+    # breakpoint()
     # check user's last level
     if request.session.get('player_id'):
         player = Player.objects.filter(id=request.session.get('player_id'))
         if player:
             player = player[0]
-            if player.last_level and int(player.last_level.id) + 1 > int(thislevel.id):
-                # redirect to last level - this level < player level
-                return HttpResponseRedirect(f'/level/{player.last_level.id}/')
-            elif int(thislevel.id) > 1 and (not player.last_level or int(player.last_level.id) + 1 < int(thislevel.id)):
-                # redirect to last level - this level > player level + 1
-                # fetch last checkpoint level
-                checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=player.last_level.id).order_by('-id')
-                # if checkpoint level exists and is less than this level, redirect to it
-                if checkpoint_level < thislevel.id:
-                    return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
-                last_level_id = player.last_level.id if player.last_level else 1
-                return HttpResponseRedirect(f'/level/{last_level_id}/')
+
+            if 1==0:
+                if player.last_level and int(player.last_level.id) + 1 > int(thislevel.id):
+                    # redirect to last level - this level < player level
+                    return HttpResponseRedirect(f'/level/{player.last_level.id}/')
+                elif int(thislevel.id) > 1 and (not player.last_level or int(player.last_level.id) + 1 < int(thislevel.id)):
+                    # redirect to last level - this level > player level + 1
+                    # fetch last checkpoint level
+                    checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=player.last_level.id).order_by('-id')
+                    # if checkpoint level exists and is less than this level, redirect to it
+                    if checkpoint_level < thislevel.id:
+                        return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
+                    last_level_id = player.last_level.id if player.last_level else 1
+                    return HttpResponseRedirect(f'/level/{last_level_id}/')
         else:
             del request.session['player_id']
             return HttpResponseRedirect('/login/')
-
+    # breakpoint()
     template = loader.get_template('level.html')
     form = AnswerForm()
     context = {
