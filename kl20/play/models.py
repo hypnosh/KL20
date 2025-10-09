@@ -19,10 +19,15 @@ class Level(models.Model):
     level_identifier = models.CharField(max_length=7, null=True)
     checkpoint = models.BooleanField(default=False)
     name = models.CharField(max_length=150)
-    question = models.CharField(max_length=200)
-    answer = models.CharField(max_length=50)
     slug = models.SlugField(null=True)
     image = models.ImageField(upload_to = upload_path,null=True)
+    question = models.TextField()
+    answer = models.CharField(max_length=50)
+    # sourcehint = models.CharField(max_length=500, null=True, blank=True)
+    headcomment = models.CharField(max_length=100, null=True, blank=True)    
+    sourcehint = models.TextField(null=True, blank=True)
+    prev_level = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+
     class AlignmentH(models.TextChoices):
         LEFT = 'left', 'Left'
         CENTER = 'hcenter', 'Center'

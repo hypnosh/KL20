@@ -4,7 +4,7 @@ from .models import Level, Attempt, Player
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
-	list_display = ('level_identifier', 'name', 'checkpoint', 'question', 'answer')
+	list_display = ('level_identifier', 'name', 'checkpoint', 'question', 'answer', 'slug', 'prev_level')
 	search_fields = ('name', 'question')
 
 @admin.register(Attempt)
