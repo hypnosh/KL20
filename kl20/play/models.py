@@ -22,11 +22,16 @@ class Level(models.Model):
     slug = models.SlugField(null=True)
     image = models.ImageField(upload_to = upload_path,null=True)
     question = models.TextField()
+    
     answer = models.CharField(max_length=50)
-    # sourcehint = models.CharField(max_length=500, null=True, blank=True)
+    routes = models.JSONField(null=True, blank=True)
+
     headcomment = models.CharField(max_length=100, null=True, blank=True)    
     sourcehint = models.TextField(null=True, blank=True)
+    
     prev_level = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+    
+    # list of tuples (answer, message)
 
     class AlignmentH(models.TextChoices):
         LEFT = 'left', 'Left'

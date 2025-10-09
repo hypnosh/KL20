@@ -65,6 +65,36 @@ def LevelView(request, slug='', id=0):
         if player:
             player = player[0]
 
+            if request.method == "POST":
+                form = AnswerForm(request.POST)
+                if form.is_valid():
+                    answer = form.cleaned_data['answer']
+                    correct = (answer.strip().lower() == thislevel.answer.strip().lower())
+                    Attempt.objects.create(level=thislevel, answer=answer, correct=correct, player=player)
+                    if correct:
+                        # if correct, redirect to next level
+                        next_level = Level.objects.filter(id=int(thislevel.id)+1) # get it from a query
+                        if next_level:
+                            return HttpResponseRedirect(f'/level/{next_level[0].id}/')
+                        else:
+                            return HttpResponse('Congratulations! You have completed all levels.')
+                    else:
+                        # route parsing from json
+                        context = {
+                            'level': thislevel,
+                            'form': form,
+                            'error': 'Incorrect answer. Please try again.'
+                        }
+                        template = loader.get_template('level.html')
+                        return HttpResponse(template.render(context, request))
+            else: # if get
+            # now do all of the logic building
+            # 	fetch last level
+            # 	if last > current - go to last
+            #	if last < current
+            #		checkpoint between last and current?
+            #		if checkpoint exists - go to checkpoint
+            #		if checkpoint doesn't exist - render current, set current as last
             if 1==0:
                 if player.last_level and int(player.last_level.id) + 1 > int(thislevel.id):
                     # redirect to last level - this level < player level
