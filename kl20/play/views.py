@@ -80,6 +80,17 @@ def LevelView(request, slug='', id=0):
                             return HttpResponse('Congratulations! You have completed all levels.')
                     else:
                         # route parsing from json
+                        routes = thislevel.routes
+                        if routes:
+                            for route in routes:
+                                if answer.strip().lower() == route[0].strip().lower():
+                                    context = {
+                                        'level': thislevel,
+                                        'form': form,
+                                        'error': route[1]
+                                    }
+                                    template = loader.get_template('level.html')
+                                    return HttpResponse(template.render(context, request))
                         context = {
                             'level': thislevel,
                             'form': form,
