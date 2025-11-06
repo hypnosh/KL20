@@ -15,6 +15,11 @@
     <h1 class="lvltitle">{{ level.level_identifier }}</h1>
     <form method="post" class="lvlform {{level.alignV}} {{level.alignH}} col-xs-10 col-sm-10 col-md-8 col-lg-6">
       {% csrf_token %}
+      {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+      {% endif %}
       <p class="lvlquestion">{{ level.question|linebreaks }}</p>
       {{ form.as_p }}
       <p>
