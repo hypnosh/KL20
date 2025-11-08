@@ -75,7 +75,8 @@ def LevelView(request, slug='', id=0):
                     Attempt.objects.create(level=thislevel, answer=answer, correct=correct, player=player)
                     if correct:
                         # if correct, redirect to next level
-                        next_level = Level.objects.filter(id=int(thislevel.id)+1) # get it from a query
+                        next_level = Level.objects.filter(prev_level = thislevel)
+                        # next_level = Level.objects.filter(id=int(thislevel.id)+1) # get it from a query
                         if next_level:
                             return HttpResponseRedirect(f'/level/{next_level[0].id}/')
                         else:
@@ -83,9 +84,11 @@ def LevelView(request, slug='', id=0):
                     else:
                         # if not correct, route parsing from json
                         routes = thislevel.routes
-                        message = routes.get(answer.strip().upper())
-                        # breakpoint()
-                        if not message:
+                        if routes:
+                            message = routes.get(answer.strip().upper())
+                            if not message:
+                                message = "Wrong!"
+                        else:
                             message = "Wrong!"
 
                         context = {
@@ -117,6 +120,8 @@ def LevelView(request, slug='', id=0):
                             return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
                         last_level_id = player.last_level.id if player.last_level else 1
                         return HttpResponseRedirect(f'/level/{last_level_id}/')
+                player.last_level = thislevel
+                player.save()
         else:
             del request.session['player_id']
             return HttpResponseRedirect('/login/')
