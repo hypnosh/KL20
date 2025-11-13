@@ -110,7 +110,9 @@ def LevelView(request, slug='', id=0):
                     # breakpoint()
                     checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=thislevel.id).order_by('-id')
                         # checkpoint between last and current?
-                    if checkpoint_level and int(thislevel.id) > int(checkpoint_level[0].id):
+                        # let's figure this out on 14th nov
+                    if checkpoint_level and int(last_level.id) < int(checkpoint_level[0].id):
+                        # if the checkpoint is after last level, i.e. the user has still not crossed the checkpoint
                         return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
                         # if checkpoint exists - go to checkpoint
                     else:
