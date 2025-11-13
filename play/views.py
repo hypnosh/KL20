@@ -107,7 +107,8 @@ def LevelView(request, slug='', id=0):
                     return HttpResponseRedirect(f'/level/{last_level.id}/')
                 else:
                     # if last < current
-                    checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=last_level.id).order_by('-id')
+                    # breakpoint()
+                    checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=thislevel.id).order_by('-id')
                         # checkpoint between last and current?
                     if checkpoint_level and int(thislevel.id) > int(checkpoint_level[0].id):
                         return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
