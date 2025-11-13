@@ -100,26 +100,21 @@ def LevelView(request, slug='', id=0):
                         return HttpResponse(template.render(context, request))
                         
             else: # if get
-            # now do all of the logic building
-            # 	fetch last level
-            # 	if last > current - go to last
-            #	if last < current
-            #		checkpoint between last and current?
-            #		if checkpoint exists - go to checkpoint
-            #		if checkpoint doesn't exist - render current, set current as last
-                if 1==0:
-                    if player.last_level and int(player.last_level.id) + 1 > int(thislevel.id):
-                        # redirect to last level - this level < player level
-                        return HttpResponseRedirect(f'/level/{player.last_level.id}/')
-                    elif int(thislevel.id) > 1 and (not player.last_level or int(player.last_level.id) + 1 < int(thislevel.id)):
-                        # redirect to last level - this level > player level + 1
-                        # fetch last checkpoint level
-                        checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=player.last_level.id).order_by('-id')
-                        # if checkpoint level exists and is less than this level, redirect to it
-                        if checkpoint_level < thislevel.id:
-                            return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
-                        last_level_id = player.last_level.id if player.last_level else 1
-                        return HttpResponseRedirect(f'/level/{last_level_id}/')
+                # 	fetch last level
+                last_level = player.last_level if player.last_level else 1
+                if int(last_level.id) > int(thislevel.id):
+                    # 	if last > current - go to last
+                    return HttpResponseRedirect(f'/level/{last_level.id}/')
+                else:
+                    # if last < current
+                    checkpoint_level = Level.objects.filter(checkpoint=True, id__lt=last_level.id).order_by('-id')
+                        # checkpoint between last and current?
+                    if checkpoint_level and int(thislevel.id) > int(checkpoint_level[0].id):
+                        return HttpResponseRedirect(f'/level/{checkpoint_level[0].id}/')
+                        # if checkpoint exists - go to checkpoint
+                    else:
+                        # else continue
+                        pass
                 player.last_level = thislevel
                 player.save()
         else:
