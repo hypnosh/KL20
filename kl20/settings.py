@@ -86,22 +86,6 @@ DATABASES = {
     }
 }
 
-DATABASES_PROD = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'rootunroot',
-        'PASSWORD': 'UK6k3XsFuZ9vdb7',
-        'HOST': 'kl20db.clsq04kusmai.eu-north-1.rds.amazonaws.com',
-        'PORT': '5432'
-    }
-}
-
-
-# DATABASES = DATABASES_PROD if not DEBUG else DATABASES
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
