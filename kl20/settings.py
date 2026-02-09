@@ -31,7 +31,7 @@ DEBUG = False
 MEDIA_ROOT = str(settings_file_folder / ".." / "media")
 
 
-ALLOWED_HOSTS = ['localhost'] if not DEBUG else ['*.elasticbeanstalk.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost'] if not DEBUG else ['kluecifer.pythonanywhere.com']
 
 
 # Application definition
@@ -98,7 +98,7 @@ DATABASES_PROD = {
 }
 
 
-DATABASES = DATABASES_PROD if not DEBUG else DATABASES
+# DATABASES = DATABASES_PROD if not DEBUG else DATABASES
 
 
 
