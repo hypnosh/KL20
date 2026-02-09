@@ -25,13 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w&$o0hn5)rt#t7(wkdvf&+()f0)c$k!wh3o@y7)o7=*1t5qhwa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # MEDIA_ROOT = Path(__file__).resolve().parent / "media"
 MEDIA_ROOT = str(settings_file_folder / ".." / "media")
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost'] if not DEBUG else ['*.elasticbeanstalk.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -85,6 +85,21 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES_PROD = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'rootunroot',
+        'PASSWORD': 'UK6k3XsFuZ9vdb7',
+        'HOST': 'kl20db.clsq04kusmai.eu-north-1.rds.amazonaws.com',
+        'PORT': '5432'
+    }
+}
+
+
+DATABASES = DATABASES_PROD if not DEBUG else DATABASES
+
 
 
 # Password validation
