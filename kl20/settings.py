@@ -30,6 +30,8 @@ DEBUG = False
 # MEDIA_ROOT = Path(__file__).resolve().parent / "media"
 MEDIA_ROOT = str(settings_file_folder / ".." / "media")
 
+STATIC_ROOT = str(settings_file_folder / ".." / "static" )
+
 
 ALLOWED_HOSTS = ['localhost'] if not DEBUG else ['kluecifer.pythonanywhere.com']
 
