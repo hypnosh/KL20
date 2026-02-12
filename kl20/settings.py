@@ -33,7 +33,7 @@ MEDIA_ROOT = str(settings_file_folder / ".." / "media")
 STATIC_ROOT = str(settings_file_folder / ".." / "static" )
 
 
-ALLOWED_HOSTS = ['localhost'] if not DEBUG else ['kluecifer.pythonanywhere.com']
+ALLOWED_HOSTS = ['kluecifer.pythonanywhere.com'] # ['localhost'] if not DEBUG else
 
 
 # Application definition
