@@ -30,7 +30,7 @@ DEBUG = False
 # MEDIA_ROOT = Path(__file__).resolve().parent / "media"
 MEDIA_ROOT = str(settings_file_folder / ".." / "media")
 
-STATIC_ROOT = str(settings_file_folder / ".." / "static" )
+STATIC_ROOT = str(settings_file_folder / ".." / "static")
 
 
 ALLOWED_HOSTS = ['kluecifer.pythonanywhere.com'] # ['localhost'] if not DEBUG else
@@ -123,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
