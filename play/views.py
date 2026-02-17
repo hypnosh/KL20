@@ -6,7 +6,19 @@ from .forms import AnswerForm, LoginForm
 
 # Create your views here.
 
-def main(request):
+def Main(request):
+    template = loader.get_template('cms.html')
+    content = Content.objects.filter(slug='main-page')
+    if not content:
+        return HttpResponse('Content not found')
+    content = content[0]
+
+    context = {
+        'content': content,
+    }
+    return HttpResponse(template.render(context, request))
+
+def Play(request):
     if not request.session.get('player_id'):
         return HttpResponseRedirect('/login/')
 
