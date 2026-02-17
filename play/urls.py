@@ -8,5 +8,5 @@ urlpatterns = [
     path('logout/', views.Logout),
     path('level/<int:id>/', views.LevelView, name='level_id'),
     path('level/<slug:slug>/', views.LevelView, name='level_slug'),
-    path('privacy-policy/', views.PrivacyPolicy, name='privacy_policy'),
+    path('content/<slug:slug>/', views.Content_view, name='CMS_Content'),
 ]
