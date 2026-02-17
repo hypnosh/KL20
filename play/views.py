@@ -17,10 +17,17 @@ def main(request):
     player = player[0]
     return HttpResponseRedirect(f'/level/{player.last_level.id if player.last_level else 1}/')
 
-def PrivacyPolicy(request):
+def ContentView(request, slug):
     template = loader.get_template('cms.html')
-    
-    context = {}
+
+    content = Content.objects.filter(slug=slug)
+    if not content:
+        return HttpResponse('Content not found')
+    content = content[0]
+
+    context = {
+        'content': content,
+    }
     return HttpResponse(template.render(context, request))
 
 def Login(request):
