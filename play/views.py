@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Level, Attempt, Player
+from .models import Level, Attempt, Player, Content
 from .forms import AnswerForm, LoginForm
 
 # Create your views here.
