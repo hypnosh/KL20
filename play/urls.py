@@ -6,7 +6,7 @@ urlpatterns = [
     path('login/', views.Login),
     path('oauth', views.GmailLogin),
     path('logout/', views.Logout),
-    path('level/<int:id>/', views.LevelView, name='level_id'),
-    path('level/<slug:slug>/', views.LevelView, name='level_slug'),
-    path('content/<slug:slug>/', views.Content_view, name='CMS_Content'),
+    path('level/<int:id>', views.LevelView, name='level_id'),
+    path('level/<slug:slug>', views.LevelView, name='level_slug'),
+    path('content/<slug:slug>', views.Content_view, name='CMS_Content'),
 ]
