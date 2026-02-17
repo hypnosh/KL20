@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w&$o0hn5)rt#t7(wkdvf&+()f0)c$k!wh3o@y7)o7=*1t5qhwa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 
 # MEDIA_ROOT = Path(__file__).resolve().parent / "media"

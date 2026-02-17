@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Level, Attempt, Player
+from .models import Level, Attempt, Player, Content
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
@@ -16,3 +16,8 @@ class AttemptAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
 	list_display = ('name', 'email', 'is_admin')
 	search_fields = ('name', 'email')
+
+@admin.register(Content)
+class ContentAdmin(admin.ModelAdmin):
+	list_display = ('title', 'slug')
+	search_fields = ('title',)
