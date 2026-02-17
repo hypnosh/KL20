@@ -24,6 +24,8 @@ def ContentView(request, slug):
     if not content:
         return HttpResponse('Content not found')
     content = content[0]
+    
+    content.content = mark_safe(content.content)
 
     context = {
         'content': content,
