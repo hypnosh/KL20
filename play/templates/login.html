@@ -6,12 +6,19 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Login</h1>
   
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
-  
+    <h1>You must identify yourself to be able to play!</h1>
+    <p><i>We don't use your personal data in any form for any commercial purposes. Promise!</i></p>
+
+  <div class="col-8">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Play</button>
+    </form>
+    <p>OR</p>
+    
+  </div>
+    
+
 {% endblock %}

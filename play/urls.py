@@ -4,7 +4,9 @@ from . import views
 urlpatterns = [
     path('', views.main),
     path('login/', views.Login),
+    path('oauth', views.GmailLogin),
     path('logout/', views.Logout),
     path('level/<int:id>/', views.LevelView, name='level_id'),
     path('level/<slug:slug>/', views.LevelView, name='level_slug'),
+    path('privacy-policy', views.PrivacyPolicy, name='privacy_policy'),
 ]

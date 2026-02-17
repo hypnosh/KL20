@@ -17,6 +17,12 @@ def main(request):
     player = player[0]
     return HttpResponseRedirect(f'/level/{player.last_level.id if player.last_level else 1}/')
 
+def PrivacyPolicy(request):
+    template = loader.get_template('cms.html')
+    
+    context = {}
+    return HttpResponse(template.render(context, request))
+
 def Login(request):
     if request.session.get('player_id'):
         return HttpResponseRedirect('/')
@@ -41,6 +47,23 @@ def Login(request):
                 context['error'] = 'Invalid email or password'
     
     return HttpResponse(template.render(context, request))
+
+def GmailLogin(request):
+    if request.session.get('player_id'):
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        player = Player.objects.filter(email=email)
+        if player:
+            player = player[0]
+        else:
+            # create new player
+            player = Player.objects.create(name=email.split('@')[0], email=email, password='gmail_oauth', is_admin=False)
+        request.session['player_id'] = player.id
+        return HttpResponseRedirect('/')
+
+    return HttpResponseRedirect('/login/')
 
 def Logout(request):
     if request.session.get('player_id'):

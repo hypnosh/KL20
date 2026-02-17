@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w&$o0hn5)rt#t7(wkdvf&+()f0)c$k!wh3o@y7)o7=*1t5qhwa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # MEDIA_ROOT = Path(__file__).resolve().parent / "media"
 MEDIA_ROOT = str(settings_file_folder / ".." / "media")
@@ -33,7 +33,7 @@ MEDIA_ROOT = str(settings_file_folder / ".." / "media")
 STATIC_ROOT = str(settings_file_folder / ".." / "static")
 
 
-ALLOWED_HOSTS = ['kluecifer.pythonanywhere.com'] # ['localhost'] if not DEBUG else
+ALLOWED_HOSTS = ['kluecifer.pythonanywhere.com'] if not DEBUG else ['localhost', '127.0.0.1']
 
 
 # Application definition
