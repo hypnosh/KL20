@@ -5,10 +5,12 @@
 
 {% block content %}
   <header>
-    <h1>The Game</h1>
+    <h1><a href="/">The Game</a></h1>
     <h2>{{ content.title }}</h2>
   </header>
   <div class="content">
-    {{ content.content }}
+    {% autoescape off %}
+      {{ content.content }}
+    {% endautoescape %}
   </div>
 {% endblock %}
