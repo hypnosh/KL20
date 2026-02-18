@@ -6,13 +6,26 @@ from .forms import AnswerForm, LoginForm
 
 # Create your views here.
 
-def Main(request):
+# def Main(request):
+#     template = loader.get_template('cms.html')
+#     content = Content.objects.filter(slug='main-page')
+#     if not content:
+#         return HttpResponse('Content not found')
+#     content = content[0]
+
+#     context = {
+#         'content': content,
+#     }
+#     return HttpResponse(template.render(context, request))
+
+def ContentView(request, slug):
     template = loader.get_template('cms.html')
-    content = Content.objects.filter(slug='main-page')
+
+    content = Content.objects.filter(slug=slug)
     if not content:
         return HttpResponse('Content not found')
     content = content[0]
-
+    
     context = {
         'content': content,
     }
@@ -29,22 +42,9 @@ def Play(request):
     player = player[0]
     return HttpResponseRedirect(f'/level/{player.last_level.id if player.last_level else 1}/')
 
-def ContentView(request, slug):
-    template = loader.get_template('cms.html')
-
-    content = Content.objects.filter(slug=slug)
-    if not content:
-        return HttpResponse('Content not found')
-    content = content[0]
-    
-    context = {
-        'content': content,
-    }
-    return HttpResponse(template.render(context, request))
-
 def Login(request):
     if request.session.get('player_id'):
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/play/')
 
     template = loader.get_template('login.html')
     form = LoginForm()
@@ -61,7 +61,7 @@ def Login(request):
             if player:
                 player = player[0]
                 request.session['player_id'] = player.id
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/play/')
             else:
                 context['error'] = 'Invalid email or password'
     

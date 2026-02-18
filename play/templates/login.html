@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block head %}
+
   <title>Login</title>
-  <meta name="keywords" content="puzzle, online, klueless, IIM Indore, recaptured, Amit Sharma">
-  <meta name="description" content="Let's play!">
+  <meta name="google-signin-client_id" content="229307573843-cru37f5c2fac4nqsh0nh98e7v2ql9pc7.apps.googleusercontent.com">
 {% endblock %}
 
 {% block content %}
@@ -14,16 +14,25 @@
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">Play</button>
+      <button type="submit">Play</button> <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </form>
   </div>
-  <div class="col-8">
-    <a href="/oauth"><button>Login with Gmail</button></a>
-  </div>
-  <div class="col-8">
-    <h2>About The Game</h2>
-    <p>This is an online puzzle. To access the game, please login or register.</p>
-    <p><a href="/content/privacy-policy/">Privacy Policy</a></p>
-  </div>
-
+  
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+  function GsignOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
 {% endblock %}
