@@ -18,6 +18,10 @@ from .forms import AnswerForm, LoginForm
 #     }
 #     return HttpResponse(template.render(context, request))
 
+
+# Map player_id to user_id, or rewrite with user_id logic
+
+
 def ContentView(request, slug):
     template = loader.get_template('cms.html')
 
